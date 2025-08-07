@@ -1,0 +1,101 @@
+{
+  "Pathfinders": [
+    "AI/ML"
+  ],
+  "Velocity": [
+    "AI/ML"
+  ],
+  "Aliens": [
+    "CORE"
+  ],
+  "Avengers": [
+    "CORE"
+  ],
+  "Chipmunks (Core)": [
+    "CORE"
+  ],
+  "Echo (Core)": [
+    "CORE"
+  ],
+  "Sharks": [
+    "CORE"
+  ],
+  "Skywalker (Core)": [
+    "CORE"
+  ],
+  "Tintin": [
+    "CORE"
+  ],
+  "Transformers": [
+    "CORE"
+  ],
+  "Dynamos": [
+    "CORE"
+  ],
+  "leo": [
+    "CORE"
+  ],
+  "TETRIS (E2E)": [
+    "QA"
+  ],
+  "E2E": [
+    "QA"
+  ],
+  "Astra": [
+    "IA"
+  ],
+  "IOTA (PBI)": [
+    "IA"
+  ],
+  "NEXUS": [
+    "IA"
+  ],
+  "Apollo (Platform)": [
+    "Platform"
+  ],
+  "Enigma (Platform)": [
+    "Platform"
+  ],
+  "Falcon (Platform)": [
+    "Platform"
+  ],
+  "Ganges (Platform)": [
+    "Platform"
+  ],
+  "Gryffindor": [
+    "Platform"
+  ],
+  "Indus (Platform)": [
+    "Platform"
+  ],
+  "Stark (Platform)": [
+    "Platform"
+  ],
+  "Titans (Platform)": [
+    "Platform"
+  ],
+  "Zeta": [
+    "Platform"
+  ],
+  "Aurora": [
+    "UI"
+  ],
+  "Chloris (UI)": [
+    "UI"
+  ],
+  "Eirene (UI)": [
+    "UI"
+  ],
+  "Helios (UI)": [
+    "UI"
+  ],
+  "Hercules (UI)": [
+    "UI"
+  ],
+  "Iris (UI)": [
+    "UI"
+  ],
+  "Phoenix (UI)": [
+    "UI"
+  ]
+}
