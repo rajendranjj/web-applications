@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BarChart3, Archive, TrendingUp } from 'lucide-react';
+import { Archive, TrendingUp } from 'lucide-react';
 
 export default function DashboardNavigation() {
   const pathname = usePathname();
@@ -19,12 +19,6 @@ export default function DashboardNavigation() {
       href: '/backlog-trend',
       icon: TrendingUp,
       current: pathname === '/backlog-trend'
-    },
-    {
-      name: 'Triage Analysis',
-      href: '/triage',
-      icon: BarChart3,
-      current: pathname === '/triage'
     }
   ];
 
