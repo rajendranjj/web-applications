@@ -46,9 +46,9 @@ export function getBacklogPortfolio(issue: any): string {
     return 'KK DevOps';
   }
 
-  // "Fayaz QA" = "Manager's Group" in (Tharuni_Reportees, Varun_Reportees, Prasad_Reportees, Jharupula_Reportees, Komal_Reportees, Sathishkumar_Reportees, Fayaz_Reportees)
+  // "Fayaz" = "Manager's Group" in (Tharuni_Reportees, Varun_Reportees, Prasad_Reportees, Jharupula_Reportees, Komal_Reportees, Sathishkumar_Reportees, Fayaz_Reportees)
   if (managerGroup && ['Tharuni_Reportees', 'Varun_Reportees', 'Prasad_Reportees', 'Jharupula_Reportees', 'Komal_Reportees', 'Sathishkumar_Reportees', 'Fayaz_Reportees'].includes(managerGroup)) {
-    return 'Fayaz QA';
+    return 'Fayaz';
   }
 
   // "Non Engineering" = AND "Manager's Group" is EMPTY OR any unmatched cases
@@ -71,7 +71,7 @@ export function getAllBacklogPortfolios(): string[] {
     'Diksha',
     'KK AI/ML',
     'KK DevOps',
-    'Fayaz QA',
+    'Fayaz',
     'Non Engineering'
   ];
 }

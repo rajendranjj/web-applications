@@ -1,35 +1,35 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import BacklogDashboard from '@/components/BacklogDashboard';
+import Dashboard from '@/components/Dashboard';
 import DashboardNavigation from '@/components/DashboardNavigation';
-import BacklogReleaseFilter from '@/components/BacklogReleaseFilter';
+import ReleaseFilter from '@/components/ReleaseFilter';
 import { JiraIssue } from '@/types/jira';
-import { fetchBacklogBugs } from '@/lib/jiraApi';
+import { fetchTriagedBugs } from '@/lib/jiraApi';
 import { RefreshCw } from 'lucide-react';
 
-export default function BacklogPage() {
+export default function TriageAnalysisPage() {
   const [bugs, setBugs] = useState<JiraIssue[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedRelease, setSelectedRelease] = useState('all');
+  const [selectedRelease, setSelectedRelease] = useState('april');
   const [refreshing, setRefreshing] = useState(false);
 
-  const loadBacklogBugs = async (release: string) => {
+  const loadBugs = async (release: string) => {
     try {
       setLoading(true);
       setError(null);
-      const data = await fetchBacklogBugs(release);
+      const data = await fetchTriagedBugs(release);
       setBugs(data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch backlog bugs');
+      setError(err instanceof Error ? err.message : 'Failed to fetch bugs');
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    loadBacklogBugs(selectedRelease);
+    loadBugs(selectedRelease);
   }, [selectedRelease]);
 
   const handleReleaseChange = (release: string) => {
@@ -38,7 +38,7 @@ export default function BacklogPage() {
 
   const handleRefresh = async () => {
     setRefreshing(true);
-    await loadBacklogBugs(selectedRelease);
+    await loadBugs(selectedRelease);
     setRefreshing(false);
   };
 
@@ -75,10 +75,10 @@ export default function BacklogPage() {
             <div className="flex justify-between items-start">
               <div>
                 <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                  Bug Backlog Analysis Dashboard
+                  Jira Bugs Analysis Dashboard
                 </h1>
                 <p className="text-gray-600">
-                  Monitor and analyze your bug backlog across all portfolios and releases
+                  Monitor and analyze bugs and triage performance across your projects
                 </p>
               </div>
               <button
@@ -97,12 +97,12 @@ export default function BacklogPage() {
 
           <DashboardNavigation />
 
-          <BacklogReleaseFilter 
+          <ReleaseFilter 
             selectedRelease={selectedRelease}
             onReleaseChange={handleReleaseChange}
           />
 
-          <BacklogDashboard bugs={bugs} selectedRelease={selectedRelease} />
+          <Dashboard bugs={bugs} selectedRelease={selectedRelease} />
         </div>
       </div>
     </main>

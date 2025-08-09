@@ -47,7 +47,7 @@ export default function BacklogTrendTable({ trendData }: BacklogTrendTableProps)
     // Get all unique portfolios from all releases (same logic as TriageBugSummaryTable)
     const allPortfolios = new Set<string>();
     Object.values(releasePortfolioMaps).forEach(portfolioMap => {
-      portfolioMap.keys().forEach(portfolio => allPortfolios.add(portfolio));
+      Array.from(portfolioMap.keys()).forEach(portfolio => allPortfolios.add(portfolio));
     });
     
     const summaries: BacklogTrendSummary[] = [];
@@ -258,25 +258,25 @@ export default function BacklogTrendTable({ trendData }: BacklogTrendTableProps)
             <div>
               <div className="font-medium text-blue-700 mb-1">April Release:</div>
               <div className="bg-white p-2 rounded border font-mono text-gray-600 break-all">
-                project in ("integrator.io", PRE, devops) AND created >= 2025-02-26 AND created <= 2025-04-08 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-04-08
+                project in ("integrator.io", PRE, devops) AND created &gt;= 2025-02-26 AND created &lt;= 2025-04-08 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-04-08
               </div>
             </div>
             <div>
               <div className="font-medium text-green-700 mb-1">May Release:</div>
               <div className="bg-white p-2 rounded border font-mono text-gray-600 break-all">
-                project in ("integrator.io", PRE, devops) AND created >= 2025-04-08 AND created <= 2025-05-21 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-05-21
+                project in ("integrator.io", PRE, devops) AND created &gt;= 2025-04-08 AND created &lt;= 2025-05-21 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-05-21
               </div>
             </div>
             <div>
               <div className="font-medium text-orange-700 mb-1">July Release:</div>
               <div className="bg-white p-2 rounded border font-mono text-gray-600 break-all">
-                project in ("integrator.io", PRE, devops) AND created >= 2025-05-21 AND created <= 2025-07-01 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-07-01
+                project in ("integrator.io", PRE, devops) AND created &gt;= 2025-05-21 AND created &lt;= 2025-07-01 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-07-01
               </div>
             </div>
             <div>
               <div className="font-medium text-red-700 mb-1">August Release:</div>
               <div className="bg-white p-2 rounded border font-mono text-gray-600 break-all">
-                project in ("integrator.io", PRE, devops) AND created >= 2025-07-02 AND created <= 2025-08-12 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-08-12
+                project in ("integrator.io", PRE, devops) AND created &gt;= 2025-07-02 AND created &lt;= 2025-08-12 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-08-12
               </div>
             </div>
           </div>

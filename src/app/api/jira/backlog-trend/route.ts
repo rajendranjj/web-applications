@@ -10,7 +10,7 @@ const managerGroupToPortfolio: Record<string, string> = {
   'Ashok_Reportees': 'UI',
   'Chandra_Reportees': 'UI',
   'Diksha_Reportees': 'IA',
-  'Fayaz_Reportees': 'QA',
+      'Fayaz_Reportees': 'Fayaz',
   'Gurramkonda_Reportees': 'CORE',
   'Hemant_Reportees': 'Platform',
   'Jegadeesh_Reportees': 'CORE',
@@ -39,7 +39,7 @@ function getPortfolioFromManagerGroup(managerGroup: string): string | undefined 
 
 const JIRA_BASE_URL = 'https://celigo.atlassian.net';
 const JIRA_USERNAME = 'rajendran.joseph.jawahar@celigo.com';
-const JIRA_API_TOKEN = process.env.NEXT_PUBLIC_JIRA_API_TOKEN || '';
+const JIRA_API_TOKEN = process.env.JIRA_API_TOKEN || '';
 
 export async function GET(request: NextRequest) {
   try {
@@ -47,18 +47,18 @@ export async function GET(request: NextRequest) {
     
     // Backlog trend queries for each release period (same as triage bugs API)
     const backlogTrendQueries = {
-      'beforeApril': 'project in ("integrator.io", PRE, devops) and created <= 2025-02-25 and issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-02-26 ORDER BY created DESC',
-      'april': 'project in ("integrator.io", PRE, devops) AND created >= 2025-02-26 AND created <= 2025-04-08 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-04-09 ORDER BY created DESC',
-      'aprilResolved': 'project in ("integrator.io", PRE, devops) and created <= 2025-02-26 and issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-02-26 and status CHANGED to (Closed, Released, "Pending Release", Cancelled, Done) during (2025-02-26, 2025-04-08) ORDER BY created DESC',
-      'beforeMay': 'project in ("integrator.io", PRE, devops) and created <= 2025-04-08 and issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-04-09 ORDER BY created DESC',
-      'may': 'project in ("integrator.io", PRE, devops) AND created >= 2025-04-09 AND created <= 2025-05-20 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-05-21 ORDER BY created DESC',
-      'mayResolved': 'project in ("integrator.io", PRE, devops) and created <= 2025-04-08 and issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-04-09 and status CHANGED to (Closed, Released, "Pending Release", Cancelled, Done) during (2025-04-09,2025-05-20) ORDER BY created DESC',
-      'beforeJuly': 'project in ("integrator.io", PRE, devops) and created <= 2025-05-20 and issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-05-21 ORDER BY created DESC',
-      'july': 'project in ("integrator.io", PRE, devops) AND created >= 2025-05-21 AND created <= 2025-07-01 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-07-02 ORDER BY created DESC',
-      'julyResolved': 'project in ("integrator.io", PRE, devops) and created <= 2025-05-20 and issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-05-21 and status CHANGED to (Closed, Released, "Pending Release", Cancelled, Done) during (2025-05-21,2025-07-01) ORDER BY created DESC',
-      'beforeAugust': 'project in ("integrator.io", PRE, devops) and created <= 2025-07-01 and issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-07-02 ORDER BY created DESC',
-      'august': 'project in ("integrator.io", PRE, devops) AND created >= 2025-07-02 AND created <= 2025-08-12 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-08-12 ORDER BY created DESC',
-      'augustResolved': 'project in ("integrator.io", PRE, devops) and created <= 2025-07-01 and issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-07-02 and status CHANGED to (Closed, Released, "Pending Release", Cancelled, Done) during (2025-07-02,2025-08-12) ORDER BY created DESC'
+      'beforeApril': 'project in ("IO", "PRE", "DEVOPS") and created <= 2025-02-25 and issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-02-26 ORDER BY created DESC',
+      'april': 'project in ("IO", "PRE", "DEVOPS") AND created >= 2025-02-26 AND created <= 2025-04-08 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-04-09 ORDER BY created DESC',
+      'aprilResolved': 'project in ("IO", "PRE", "DEVOPS") and created <= 2025-02-26 and issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-02-26 and status CHANGED to (Closed, Released, "Pending Release", Cancelled, Done) during (2025-02-26, 2025-04-08) ORDER BY created DESC',
+      'beforeMay': 'project in ("IO", "PRE", "DEVOPS") and created <= 2025-04-08 and issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-04-09 ORDER BY created DESC',
+      'may': 'project in ("IO", "PRE", "DEVOPS") AND created >= 2025-04-09 AND created <= 2025-05-20 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-05-21 ORDER BY created DESC',
+      'mayResolved': 'project in ("IO", "PRE", "DEVOPS") and created <= 2025-04-08 and issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-04-09 and status CHANGED to (Closed, Released, "Pending Release", Cancelled, Done) during (2025-04-09,2025-05-20) ORDER BY created DESC',
+      'beforeJuly': 'project in ("IO", "PRE", "DEVOPS") and created <= 2025-05-20 and issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-05-21 ORDER BY created DESC',
+      'july': 'project in ("IO", "PRE", "DEVOPS") AND created >= 2025-05-21 AND created <= 2025-07-01 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-07-02 ORDER BY created DESC',
+      'julyResolved': 'project in ("IO", "PRE", "DEVOPS") and created <= 2025-05-20 and issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-05-21 and status CHANGED to (Closed, Released, "Pending Release", Cancelled, Done) during (2025-05-21,2025-07-01) ORDER BY created DESC',
+      'beforeAugust': 'project in ("IO", "PRE", "DEVOPS") and created <= 2025-07-01 and issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-07-02 ORDER BY created DESC',
+      'august': 'project in ("IO", "PRE", "DEVOPS") AND created >= 2025-07-02 AND created <= 2025-08-12 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-08-12 ORDER BY created DESC',
+      'augustResolved': 'project in ("IO", "PRE", "DEVOPS") and created <= 2025-07-01 and issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-07-02 and status CHANGED to (Closed, Released, "Pending Release", Cancelled, Done) during (2025-07-02,2025-08-12) ORDER BY created DESC'
     };
 
     const maxResults = 100;

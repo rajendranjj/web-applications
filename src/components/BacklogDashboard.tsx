@@ -171,16 +171,14 @@ export default function BacklogDashboard({ bugs, selectedRelease }: BacklogDashb
         />
 
         {/* Backlog Portfolio Summary Table */}
-        {(selectedPieSegment || selectedPortfolio) && (
-          <BacklogPortfolioSummaryTable 
-            bugs={bugs} 
-            selectedPieSegment={selectedPieSegment}
-            selectedPortfolio={selectedPortfolio}
-            onPortfolioClick={handlePortfolioClick}
-            onAgeFilterClick={handleAgeFilterClick}
-            onPortfolioAgeFilterClick={handlePortfolioAgeFilterClick}
-          />
-        )}
+        <BacklogPortfolioSummaryTable 
+          bugs={bugs} 
+          selectedPieSegment={selectedPieSegment}
+          selectedPortfolio={selectedPortfolio}
+          onPortfolioClick={handlePortfolioClick}
+          onAgeFilterClick={handleAgeFilterClick}
+          onPortfolioAgeFilterClick={handlePortfolioAgeFilterClick}
+        />
 
         {/* Backlog Bugs List */}
         {(portfolioFilter || showCriticalOnly || ageFilter) && (

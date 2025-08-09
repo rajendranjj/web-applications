@@ -22,9 +22,9 @@ export default function DashboardNavigation() {
     },
     {
       name: 'Triage Analysis',
-      href: '/',
+      href: '/triage',
       icon: BarChart3,
-      current: pathname === '/'
+      current: pathname === '/triage'
     }
   ];
 

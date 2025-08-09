@@ -26,9 +26,11 @@ export default function BacklogPortfolioSummaryTable({ bugs, selectedPieSegment,
   const getPortfoliosForSegment = (segment: string): string[] => {
     switch (segment) {
       case 'Engineering':
-        return ['Jegadeesh Core', 'Jegadeesh UI', 'Mujtaba', 'Diksha', 'KK AI/ML', 'KK DevOps', 'Fayaz QA'];
-      case 'Non-Eng':
+        return ['Jegadeesh Core', 'Jegadeesh UI', 'Mujtaba', 'Diksha', 'KK AI/ML', 'KK DevOps', 'Fayaz'];
+      case 'Non-Eng(PM/UX)':
         return ['Non Engineering'];
+      case 'Fayaz':
+        return ['Fayaz'];
       default:
         return [];
     }
@@ -88,25 +90,9 @@ export default function BacklogPortfolioSummaryTable({ bugs, selectedPieSegment,
       });
     });
 
-    // Define backlog-specific portfolio order
-    const portfolioOrder = getAllBacklogPortfolios();
-    
-    // Sort by custom portfolio order
+    // Sort by total issues count (descending) - highest counts first
     const sortedSummaries = summaries.sort((a, b) => {
-      const indexA = portfolioOrder.indexOf(a.portfolio);
-      const indexB = portfolioOrder.indexOf(b.portfolio);
-      
-      // If both portfolios are in the order array, sort by their position
-      if (indexA !== -1 && indexB !== -1) {
-        return indexA - indexB;
-      }
-      
-      // If only one is in the order array, prioritize it
-      if (indexA !== -1) return -1;
-      if (indexB !== -1) return 1;
-      
-      // If neither is in the order array, sort alphabetically
-      return a.portfolio.localeCompare(b.portfolio);
+      return b.totalIssues - a.totalIssues;
     });
 
     // Filter by selected portfolio if one is selected (from drill-down pie chart) - Priority over segment
@@ -157,7 +143,7 @@ export default function BacklogPortfolioSummaryTable({ bugs, selectedPieSegment,
                   Total Issues
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Bugs >365 Days
+                  Bugs &gt;365 Days
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Teams

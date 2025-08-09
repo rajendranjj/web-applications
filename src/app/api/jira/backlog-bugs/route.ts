@@ -11,7 +11,7 @@ const managerGroupToPortfolio: Record<string, string> = {
   'Ashok_Reportees': 'UI',
   'Chandra_Reportees': 'UI',
   'Diksha_Reportees': 'IA',
-  'Fayaz_Reportees': 'QA',
+      'Fayaz_Reportees': 'Fayaz',
   'Gurramkonda_Reportees': 'CORE',
   'Hemant_Reportees': 'Platform',
   'Jegadeesh_Reportees': 'CORE',
@@ -40,7 +40,7 @@ function getPortfolioFromManagerGroup(managerGroup: string): string | undefined 
 
 const JIRA_BASE_URL = 'https://celigo.atlassian.net';
 const JIRA_USERNAME = 'rajendran.joseph.jawahar@celigo.com';
-const JIRA_API_TOKEN = process.env.NEXT_PUBLIC_JIRA_API_TOKEN || '';
+const JIRA_API_TOKEN = process.env.JIRA_API_TOKEN || '';
 
 export async function GET(request: NextRequest) {
   try {
@@ -51,11 +51,11 @@ export async function GET(request: NextRequest) {
     
     // Backlog-specific JQL queries (bugs that were in backlog at release cutoff dates)
     const backlogQueries = {
-      'all': 'issuetype = Bug AND Status NOT IN ("Pending Release", Released, Resolved, CLOSED, Done, Cancelled) and Project in ("integrator.io", Connectors, Prebuilt, Devops) ORDER BY priority DESC, created ASC',
-      'april': 'createdDate <= 2025-4-8 AND issuetype = Bug AND Status WAS NOT IN ("Pending Release", Released, Resolved, CLOSED, Done, Cancelled) BEFORE 2025-04-9 and Project in ("integrator.io", Connectors, Prebuilt, Devops) ORDER BY priority DESC, created ASC',
-      'may': 'createdDate <= 2025-5-21 AND issuetype = Bug AND Status WAS NOT IN ("Pending Release", Released, Resolved, CLOSED, Done, Cancelled) BEFORE 2025-05-22 and Project in ("integrator.io", Connectors, Prebuilt, Devops) ORDER BY priority DESC, created ASC',
-      'july': 'createdDate <= 2025-7-1 AND issuetype = Bug AND Status WAS NOT IN ("Pending Release", Released, Resolved, CLOSED, Done, Cancelled) BEFORE 2025-07-2 and Project in ("integrator.io", Connectors, Prebuilt, Devops) ORDER BY priority DESC, created ASC',
-      'august': 'createdDate <= 2025-8-12 AND issuetype = Bug AND Status WAS NOT IN ("Pending Release", Released, Resolved, CLOSED, Done, Cancelled) BEFORE 2025-08-13 and Project in ("integrator.io", Connectors, Prebuilt, Devops) ORDER BY priority DESC, created ASC'
+      'all': 'issuetype = Bug AND Status NOT IN ("Pending Release", Released, Resolved, CLOSED, Done, Cancelled) and Project in ("IO", "PRE", "DEVOPS") ORDER BY priority DESC, created ASC',
+      'april': 'createdDate <= 2025-4-8 AND issuetype = Bug AND Status WAS NOT IN ("Pending Release", Released, Resolved, CLOSED, Done, Cancelled) BEFORE 2025-04-9 and Project in ("IO", "PRE", "DEVOPS") ORDER BY priority DESC, created ASC',
+      'may': 'createdDate <= 2025-5-21 AND issuetype = Bug AND Status WAS NOT IN ("Pending Release", Released, Resolved, CLOSED, Done, Cancelled) BEFORE 2025-05-22 and Project in ("IO", "PRE", "DEVOPS") ORDER BY priority DESC, created ASC',
+      'july': 'createdDate <= 2025-7-1 AND issuetype = Bug AND Status WAS NOT IN ("Pending Release", Released, Resolved, CLOSED, Done, Cancelled) BEFORE 2025-07-2 and Project in ("IO", "PRE", "DEVOPS") ORDER BY priority DESC, created ASC',
+      'august': 'createdDate <= 2025-8-12 AND issuetype = Bug AND Status WAS NOT IN ("Pending Release", Released, Resolved, CLOSED, Done, Cancelled) BEFORE 2025-08-13 and Project in ("IO", "PRE", "DEVOPS") ORDER BY priority DESC, created ASC'
     };
     
     const jql = backlogQueries[release as keyof typeof backlogQueries] || backlogQueries.april;
@@ -64,9 +64,6 @@ export async function GET(request: NextRequest) {
     const maxPages = release === 'all' ? 30 : 15; // Increased limit for 'all' releases
     let allIssues: any[] = [];
     let startAt = 0;
-    
-    console.log('Selected backlog release:', release);
-    console.log('Backlog JQL Query:', jql);
     
     for (let page = 0; page < maxPages; page++) {
       const searchParams = new URLSearchParams({
@@ -77,7 +74,6 @@ export async function GET(request: NextRequest) {
       });
       
       const url = `${JIRA_BASE_URL}/rest/api/3/search?${searchParams.toString()}`;
-      console.log(`Fetching backlog page ${page + 1}/${maxPages} (startAt: ${startAt})`);
       
       const response = await fetch(url, {
         method: 'GET',
@@ -97,14 +93,11 @@ export async function GET(request: NextRequest) {
       allIssues = allIssues.concat(data.issues);
       
       if (data.issues.length < maxResults) {
-        console.log(`Reached end of backlog results on page ${page + 1}. Total issues: ${allIssues.length}`);
         break;
       }
       
       startAt += maxResults;
     }
-    
-    console.log(`Total backlog issues fetched: ${allIssues.length}`);
     
     const consolidatedData = {
       issues: allIssues,
@@ -168,7 +161,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Error fetching Jira backlog bugs:', error);
     console.error('Error details:', error instanceof Error ? error.message : String(error));
-    const mockData = [];
+    const mockData: any[] = [];
     return NextResponse.json(mockData);
   }
 }

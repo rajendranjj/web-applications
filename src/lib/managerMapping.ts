@@ -5,7 +5,7 @@ const managerPortfolioMapping: Record<string, string> = {
   'Anusha_Reportees': 'CORE',
   'Chandra_Reportees': 'UI',
   'Diksha_Reportees': 'IA',
-  'Fayaz_Reportees': 'QA',
+  'Fayaz_Reportees': 'Fayaz',
   'Hemant_Reportees': 'Platform',
   'Jegadeesh_Reportees': 'CORE',
   'Jharupula_Reportees': 'Platform',

@@ -6,6 +6,19 @@ const nextConfig = {
   env: {
     CUSTOM_KEY: 'my-value',
   },
+  webpack: (config, { dev, isServer }) => {
+    if (dev) {
+      // Disable webpack caching in development
+      config.cache = false;
+      // Disable optimization for faster builds
+      config.optimization = {
+        ...config.optimization,
+        minimize: false,
+        splitChunks: false,
+      };
+    }
+    return config;
+  },
   async rewrites() {
     return [
       {

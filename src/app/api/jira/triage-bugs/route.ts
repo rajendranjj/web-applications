@@ -10,7 +10,7 @@ const managerGroupToPortfolio: Record<string, string> = {
   'Ashok_Reportees': 'UI',
   'Chandra_Reportees': 'UI',
   'Diksha_Reportees': 'IA',
-  'Fayaz_Reportees': 'QA',
+      'Fayaz_Reportees': 'Fayaz',
   'Gurramkonda_Reportees': 'CORE',
   'Hemant_Reportees': 'Platform',
   'Jegadeesh_Reportees': 'CORE',
@@ -39,7 +39,7 @@ function getPortfolioFromManagerGroup(managerGroup: string): string | undefined 
 
 const JIRA_BASE_URL = 'https://celigo.atlassian.net';
 const JIRA_USERNAME = 'rajendran.joseph.jawahar@celigo.com';
-const JIRA_API_TOKEN = process.env.NEXT_PUBLIC_JIRA_API_TOKEN || '';
+const JIRA_API_TOKEN = process.env.JIRA_API_TOKEN || '';
 
 export async function GET(request: NextRequest) {
   try {
@@ -50,10 +50,10 @@ export async function GET(request: NextRequest) {
     
     // Triage-specific JQL queries (bugs that were unresolved at the end of each release period)
     const triageQueries = {
-      'april': 'project in ("integrator.io", PRE, devops) AND created >= 2025-02-26 AND created <= 2025-04-08 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-04-08 ORDER BY created DESC',
-      'may': 'project in ("integrator.io", PRE, devops) AND created >= 2025-04-08 AND created <= 2025-05-21 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-05-21 ORDER BY created DESC',
-      'july': 'project in ("integrator.io", PRE, devops) AND created >= 2025-05-21 AND created <= 2025-07-01 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-07-01 ORDER BY created DESC',
-      'august': 'project in ("integrator.io", PRE, devops) AND created >= 2025-07-02 AND created <= 2025-08-12 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-08-12 ORDER BY created DESC'
+      'april': 'project in ("IO", "PRE", "DEVOPS") AND created >= 2025-02-26 AND created <= 2025-04-08 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-04-08 ORDER BY created DESC',
+      'may': 'project in ("IO", "PRE", "DEVOPS") AND created >= 2025-04-08 AND created <= 2025-05-21 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-05-21 ORDER BY created DESC',
+      'july': 'project in ("IO", "PRE", "DEVOPS") AND created >= 2025-05-21 AND created <= 2025-07-01 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-07-01 ORDER BY created DESC',
+      'august': 'project in ("IO", "PRE", "DEVOPS") AND created >= 2025-07-02 AND created <= 2025-08-12 AND issuetype = Bug and status was not in (Closed, Released, "Pending Release", Cancelled, Done) on 2025-08-12 ORDER BY created DESC'
     };
     
     const jql = triageQueries[release as keyof typeof triageQueries] || triageQueries.april;
@@ -177,7 +177,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Error fetching Jira triage bugs:', error);
     console.error('Error details:', error instanceof Error ? error.message : String(error));
-    const mockData = [];
+    const mockData: any[] = [];
     return NextResponse.json(mockData);
   }
 }
